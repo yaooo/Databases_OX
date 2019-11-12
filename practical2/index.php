@@ -35,6 +35,16 @@ left join course on course.cno = x.cno;");
 }
 ?>
 
+<!-- Optional -->
+<!-- <?php
+if(isset($_POST['SubmitButton3'])){ //check if form was submitted
+    $input3 = $_POST['sid']; //get input text
+    $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
+    $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
+}
+?> -->
+
+
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -106,22 +116,43 @@ Q2
         ?>
 
 
-<!-- <form>
-    <select>
-        <option selected="selected">Choose one</option>
-        <?php
-        // A sample product array
-        $products = array("Mobile", "Laptop", "Tablet", "Camera");
+optional
+        <form action="" method="post">
+          <input type="text" name="sid"/>
+          <input type="submit" name="SubmitButton3"/>
+        </form>
 
-        // Iterating through the product array
-        foreach($products as $item){
-        ?>
-        <option value="<?php echo strtolower($item); ?>"><?php echo $item; ?></option>
         <?php
+
+        if(isset($_POST['SubmitButton3'])){ //check if form was submitted
+            $input3 = $_POST['sid']; //get input text
+            $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
+            $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
         }
         ?>
-    </select>
-    <input type="submit" value="Submit">
-</form> -->
+
+
+        <select name='grade' id='grade'>
+        <?php
+        while ($row = pg_fetch_array($res3)) {
+            echo "<option value='" . $row['0'] . "'>" . $row['0'] . "</option>";
+        }
+        ?>
+        </select>
+
+        <input type="submit" name="SubmitButton4"/>
+
+        <!-- <?php
+        if(isset($_POST['SubmitButton4'])){ //check if form was submitted
+            $input3 = $_POST['grade']; //get input text
+            // $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
+            // $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
+            echo 'grade';
+        }
+        ?> -->
+
+
+
+
 </body>
 </html>
