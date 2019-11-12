@@ -35,10 +35,27 @@ left join course on course.cno = x.cno;");
 }
 ?>
 
-<!-- Optional -->
-<!-- <?php
+<?php
+
 if(isset($_POST['SubmitButton3'])){ //check if form was submitted
     $input3 = $_POST['sid']; //get input text
+    $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
+    $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
+}
+?>
+
+<?php
+if(isset($_POST['SubmitButton3'])){ //check if form was submitted
+    $input3 = $_POST['sid']; //get input text
+    $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
+    $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
+}
+?>
+
+<!-- Optional -->
+<!-- <?php
+if(isset($_POST['SubmitButton4'])){ //check if form was submitted
+    $input4 = $_POST['grade']; //get input text
     $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
     $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
 }
@@ -122,32 +139,42 @@ optional
           <input type="submit" name="SubmitButton3"/>
         </form>
 
+
+
+        <form action="" method="get">
+            <?php
+            echo "<select name='grade'>";
+            while ($row = pg_fetch_array($res3)) {
+                echo "<option value='" . $row['0'] . "'>" . $row['0'] . "</option>";
+            }
+            echo "</select>";
+            ?>
+            <input type="submit" value='check' name="SubmitButton4"/>
+        </form>
+
         <?php
+            if($_GET){
+                $input5 = $_GET['grade'];
+                echo 'TEST'.$input5;
+                $db4 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
+                $res4 = pg_query($db4, "SELECT distinct grade from enroll where sid = 1 and cno = $input5;");
+                while ($row = pg_fetch_row($res4))
+                {
+                    echo 'The year selected is '.$row[0];
+                }
 
-        if(isset($_POST['SubmitButton3'])){ //check if form was submitted
-            $input3 = $_POST['sid']; //get input text
-            $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
-            $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
-        }
+            }
         ?>
-
-
-        <select name='grade' id='grade'>
-        <?php
-        while ($row = pg_fetch_array($res3)) {
-            echo "<option value='" . $row['0'] . "'>" . $row['0'] . "</option>";
-        }
-        ?>
-        </select>
-
-        <input type="submit" name="SubmitButton4"/>
 
         <!-- <?php
         if(isset($_POST['SubmitButton4'])){ //check if form was submitted
+
             $input3 = $_POST['grade']; //get input text
-            // $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
-            // $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
-            echo 'grade';
+            if(isset($_POST["grade"])){
+                echo '$draft;';
+                $draft= $_GET["grade"];
+                echo $draft;
+            }
         }
         ?> -->
 
