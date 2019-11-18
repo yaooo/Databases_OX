@@ -22,7 +22,6 @@ if(isset($_POST['SubmitButton1'])){ //check if form was submitted
 }
 ?>
 
-
 <?php
 if(isset($_POST['SubmitButton2'])){ //check if form was submitted
     $input2 = $_POST['K2']; //get input text
@@ -52,28 +51,18 @@ if(isset($_POST['SubmitButton3'])){ //check if form was submitted
 }
 ?>
 
-<!-- Optional -->
-<!-- <?php
-if(isset($_POST['SubmitButton4'])){ //check if form was submitted
-    $input4 = $_POST['grade']; //get input text
-    $db3 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
-    $res3 = pg_query($db3, "SELECT distinct cno, grade from enroll where sid = $input3;");
-}
-?> -->
-
-
 <html lang="en">
 <head>
 <meta charset="utf-8">
 </head>
 <body>
-
+    Q1
     <form action="" method="post">
       <input type="text" name="cno"/>
       <input type="submit" name="SubmitButton"/>
     </form>
 
-    Q1
+
     <?php
     echo "<table border = '1'>
     <tr>
@@ -132,7 +121,6 @@ Q2
         echo "</table>";
         ?>
 
-
 optional
         <form action="" method="post">
           <input type="text" name="sid"/>
@@ -145,7 +133,7 @@ optional
             <?php
             echo "<select name='grade'>";
             while ($row = pg_fetch_array($res3)) {
-                echo "<option value='" . $row['0'] . "'>" . $row['0'] . "</option>";
+                echo "<option value='" . "Course: " . $row['0'] . "------ Grade: " . $row['1'] . "'>" . $row['0'] . "</option>";
             }
             echo "</select>";
             ?>
@@ -155,31 +143,8 @@ optional
         <?php
             if($_GET){
                 $input5 = $_GET['grade'];
-                echo 'TEST'.$input5;
-                $db4 = pg_connect("host=tr01 dbname=ms19ys user=ms19ys");
-                $res4 = pg_query($db4, "SELECT distinct grade from enroll where sid = 1 and cno = $input5;");
-                while ($row = pg_fetch_row($res4))
-                {
-                    echo 'The year selected is '.$row[0];
-                }
-
+                echo $input5;
             }
         ?>
-
-        <!-- <?php
-        if(isset($_POST['SubmitButton4'])){ //check if form was submitted
-
-            $input3 = $_POST['grade']; //get input text
-            if(isset($_POST["grade"])){
-                echo '$draft;';
-                $draft= $_GET["grade"];
-                echo $draft;
-            }
-        }
-        ?> -->
-
-
-
-
 </body>
 </html>
